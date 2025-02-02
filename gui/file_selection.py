@@ -204,11 +204,14 @@ class FileSelectionFrame(tk.Frame):
         if self.__use_output_prettier:
             # If the Excel sheet should be edited to look nicer
             # Currently only autosize of the columns
+            log.log_event(f"Apply prettier to Excel sheet")
+            log.log_event(f"Adjust column width to content size")
             wb = openpyxl.load_workbook(self.__output_path)
             sheet = wb[sheet_name]
             for col in sheet.columns:
                 sheet.column_dimensions[col[0].column_letter].auto_size = True
             wb.save(self.__output_path)
+            log.log_event(f"Finished prettier and closed workbook")
 
         log.log_event(f"XML data exported to {self.__output_path}")
 
